@@ -27,18 +27,19 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Welcome to the Home Page</h1>
-        {% if logged_in %}
-            <form action="{{ url_for('logout') }}" method="POST">
-                <button type="submit">Logout</button>
-            </form>
-        {% else %}
-            <a href="{{ url_for('login') }}">
-                <button>Login/Register</button>
-            </a>
-        {% endif %}
-    </div>
-    <p>This is the main content of the home page.</p>
+    <h1>Welcome to the Jar Of Joy</h1>
+    {% if logged_in %}
+        <p>You are logged in!</p>
+        <a href="{{ url_for('entries') }}">
+            <button type="button">Create New Entry</button>
+        </a>
+        <form action="{{ url_for('logout') }}" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <p>Please log in to create an entry.</p>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
 </body>
 </html>
