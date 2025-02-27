@@ -8,11 +8,20 @@
 </head>
 <body>
     <h1>Register</h1>
-    <form method="POST">
+    <form action="/register" method="POST">
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Register</button>
     </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     <a href="{{ url_for('login') }}">Already have an account? Login here.</a>
 </body>
 </html>
