@@ -102,5 +102,32 @@ def entries():
         return redirect(url_for('entries'))
 
     return render_template('entries.html')
+
+@app.route('/random_entry', methods=['GET'])
+def random_entry():
+    if 'user_id' not in session:
+        flash('You need to log in first.', 'danger')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT COUNT(*) as entry_count FROM Entries WHERE user_id = %s", (user_id,))
+    result = cursor.fetchone()
+
+    if result['entry_count'] == 0:
+        flash('You have no entries to display.', 'warning')
+        return redirect(url_for('entries'))
+    # Fetch a random entry for the logged-in user
+    cursor.execute("SELECT * FROM Entries WHERE user_id = %s ORDER BY RAND() LIMIT 1", (user_id,))
+    entry = cursor.fetchone()
+    entry_id = entry['entry_id']
+    cursor.execute("DELETE FROM Entries WHERE entry_id = %s AND user_id = %s", (entry_id, user_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return render_template('random_entry.html', random_entry=entry)
 if __name__ == '__main__':
     app.run(debug=True)

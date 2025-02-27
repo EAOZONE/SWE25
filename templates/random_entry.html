@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Home</title>
+    <title>Random Entry</title>
     <style>
         /* Add some basic styles for the button */
         .header {
@@ -27,22 +27,14 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to the Jar Of Joy</h1>
-    {% if logged_in %}
-        <p>You are logged in!</p>
-        <a href="{{ url_for('entries') }}">
-            <button type="button">Create New Entry</button>
+    <div class="header">
+        <h1>Random Entry</h1>
+        <a href="{{ url_for('home') }}">
+            <button type="button">Back to Home</button>
         </a>
-        <a href="{{ url_for('random_entry') }}">
-            <button type="button">Random Entry</button>
-        </a>
-        <form action="{{ url_for('logout') }}" method="POST">
-            <button type="submit">Logout</button>
-        </form>
-    {% else %}
-        <p>Please log in to create an entry.</p>
-        <a href="{{ url_for('login') }}">Login</a>
-        <a href="{{ url_for('register') }}">Register</a>
-    {% endif %}
+    </div>
+    <div class="entry">
+        <p>{{ random_entry.content }}</p>
+    </div>
 </body>
 </html>
