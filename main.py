@@ -33,10 +33,17 @@ def register():
         conn = get_db_connection()
         cursor = conn.cursor()
         try:
-            cursor.execute("INSERT INTO User (email, password) VALUES (%s, %s)", (email, hashed_password))
-            conn.commit()
-            flash('Registration successful! You can now log in.', 'success')
-            return redirect(url_for('login'))
+            # Check if the email already exists
+            cursor.execute("SELECT * FROM User WHERE email = %s", (email,))
+            existing_user = cursor.fetchone()
+
+            if existing_user:
+                flash('Email already registered. Please use a different email.', 'danger')
+            else:
+                cursor.execute("INSERT INTO User (email, password) VALUES (%s, %s)", (email, hashed_password))
+                conn.commit()
+                flash('Registration successful! You can now log in.', 'success')
+                return redirect(url_for('login'))
         except mysql.connector.Error as err:
             flash(f'Error: {err}', 'danger')
         finally:
