@@ -81,5 +81,26 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
+@app.route('/entries', methods=['POST', 'GET'])
+def entries():
+    if 'user_id' not in session:
+        flash('You need to log in first.', 'danger')
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        content = request.form['content']
+        user_id = session['user_id']
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO Entries (content, user_id) VALUES (%s, %s)", (content, user_id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        flash('Entry created successfully!', 'success')
+        return redirect(url_for('entries'))
+
+    return render_template('entries.html')
 if __name__ == '__main__':
     app.run(debug=True)
