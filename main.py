@@ -93,7 +93,7 @@ def entries():
 
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO Entries (content, user_id) VALUES (%s, %s)", (content, user_id))
+        cursor.execute("INSERT INTO Entries (content, user_id, time) VALUES (%s, %s, NOW())", (content, user_id))
         conn.commit()
         cursor.close()
         conn.close()
