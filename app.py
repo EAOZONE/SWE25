@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///jarofjoy.db'  # Local SQLite database
@@ -26,10 +27,48 @@ class Entry(db.Model):
 with app.app_context():
     db.create_all()
 
+def get_streak(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT time FROM Entries WHERE user_id = %s ORDER BY time DESC", (user_id,))
+    entries = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    if not entries:
+        return 0  # no entries
+
+    streak = 0
+    counted_days = set() #to avoid double counting
+    prev_day = datetime.today().date()
+    for entry in entries:
+        print(entry['time'])
+        entry_date = datetime.strptime(str(entry['time']), "%Y-%m-%d %H:%M:%S").date()
+
+        if entry_date in counted_days:  # skip if already counted
+            continue
+
+        if entry_date == prev_day:  # consecutive days
+            streak += 1
+        elif entry_date == prev_day - timedelta(days=1):  # cont streak
+            streak += 1
+        else:  # break streak
+            break
+        counted_days.add(entry_date)
+        prev_day = entry_date  # move to the next day
+    
+    return streak
+
 @app.route('/')
 def home():
     logged_in = 'user_id' in session
-    return render_template('home.html', logged_in=logged_in)
+    streak = 0
+    if logged_in:
+        user_id = session['user_id']
+        streak = get_streak(user_id)
+        return render_template('home.html', logged_in=logged_in, streak=streak)
+    
+    return render_template('home.html', logged_in=logged_in, streak=streak)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
