@@ -10,6 +10,7 @@
     <h1>Welcome to the Jar Of Joy</h1>
     {% if logged_in %}
         <p>You are logged in!</p>
+        <p>Current Streak: {{ streak }}</p>
         <a href="{{ url_for('entries') }}">
             <button type="button">Create New Entry</button>
         </a>
