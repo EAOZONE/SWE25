@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Register</title>
+</head>
+<body>
+<a href="{{ url_for('view_entries', order_by='DESC') }}">
+    <button type="button">Newest</button>
+</a>
+<a href="{{ url_for('view_entries', order_by='ASC') }}">
+    <button type="button">Oldest</button>
+</a>
+
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Entry</th>
+    </tr>
+    {% for entry in entries %}
+    <tr>
+        <td>{{ entry['content'] }}</td>
+        <td>{{ entry['time'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

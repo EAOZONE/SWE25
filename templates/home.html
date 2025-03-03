@@ -16,6 +16,9 @@
         <a href="{{ url_for('random_entry') }}">
             <button type="button">Random Entry</button>
         </a>
+        <a href="{{ url_for('view_entries') }}">
+            <button type="button">View Entries</button>
+        </a>
         <form action="{{ url_for('logout') }}" method="POST">
             <button type="submit">Logout</button>
         </form>
