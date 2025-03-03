@@ -129,5 +129,32 @@ def random_entry():
     conn.close()
 
     return render_template('random_entry.html', random_entry=entry)
+
+@app.route('/view_entries', methods=['GET'])
+def view_entries():
+    if 'user_id' not in session:
+        flash('You need to log in first.', 'danger')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    order_param = request.args.get('order_by', 'DESC').upper() 
+
+    if order_param == "ASC":
+        order_by = "ASC"
+    else:
+        order_by = "DESC"
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    query = "SELECT * FROM Entries WHERE user_id = %s ORDER BY time " + order_by
+    cursor.execute(query, (user_id,))  
+
+    entries = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return render_template('view_entries.html', entries=entries, current_order=order_by)
+
 if __name__ == '__main__':
     app.run(debug=True)
