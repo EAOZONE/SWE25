@@ -122,8 +122,9 @@ def random_entry():
     # Fetch a random entry for the logged-in user
     cursor.execute("SELECT * FROM Entries WHERE user_id = %s ORDER BY RAND() LIMIT 1", (user_id,))
     entry = cursor.fetchone()
-    entry_id = entry['entry_id']
-    cursor.execute("DELETE FROM Entries WHERE entry_id = %s AND user_id = %s", (entry_id, user_id))
+    content = entry['content']
+    time = entry['time']
+    cursor.execute("DELETE FROM Entries WHERE content= %s AND time = %s AND user_id = %s", (content, time, user_id))
     conn.commit()
     cursor.close()
     conn.close()
