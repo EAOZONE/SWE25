@@ -1,27 +1,74 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-import mysql.connector
+from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
-app.config['MYSQL_DATABASE_HOST'] = 'jarofjoy2025.c10agqm2ctie.us-east-2.rds.amazonaws.com'
-app.config['MYSQL_DATABASE_USER'] = 'admin'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'wpjkdErnJ8oK3aM9ojK7'
-app.config['MYSQL_DATABASE_DB'] = 'jarofjoy'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///jarofjoy.db'  # Local SQLite database
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = 'your_secret_key'
 
-# Create a MySQL connection
-def get_db_connection():
-    return mysql.connector.connect(
-        host=app.config['MYSQL_DATABASE_HOST'],
-        user=app.config['MYSQL_DATABASE_USER'],
-        password=app.config['MYSQL_DATABASE_PASSWORD'],
-        database=app.config['MYSQL_DATABASE_DB']
-    )
+db = SQLAlchemy(app)
+
+# Define User and Entry models
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(128), nullable=False)
+    entries = db.relationship('Entry', backref='user', lazy=True)
+
+class Entry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    time = db.Column(db.DateTime, server_default=db.func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+# Create the database tables
+with app.app_context():
+    db.create_all()
+
+def get_streak(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT time FROM Entries WHERE user_id = %s ORDER BY time DESC", (user_id,))
+    entries = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    if not entries:
+        return 0  # no entries
+
+    streak = 0
+    counted_days = set() #to avoid double counting
+    prev_day = datetime.today().date()
+    for entry in entries:
+        print(entry['time'])
+        entry_date = datetime.strptime(str(entry['time']), "%Y-%m-%d %H:%M:%S").date()
+
+        if entry_date in counted_days:  # skip if already counted
+            continue
+
+        if entry_date == prev_day:  # consecutive days
+            streak += 1
+        elif entry_date == prev_day - timedelta(days=1):  # cont streak
+            streak += 1
+        else:  # break streak
+            break
+        counted_days.add(entry_date)
+        prev_day = entry_date  # move to the next day
+    
+    return streak
 
 @app.route('/')
 def home():
     logged_in = 'user_id' in session
-    return render_template('home.html', logged_in=logged_in)
+    streak = 0
+    if logged_in:
+        user_id = session['user_id']
+        streak = get_streak(user_id)
+        return render_template('home.html', logged_in=logged_in, streak=streak)
+    
+    return render_template('home.html', logged_in=logged_in, streak=streak)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -30,25 +77,16 @@ def register():
         password = request.form['password']
         hashed_password = generate_password_hash(password)
 
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        try:
-            # Check if the email already exists
-            cursor.execute("SELECT * FROM User WHERE email = %s", (email,))
-            existing_user = cursor.fetchone()
+        existing_user = User.query.filter_by(email=email).first()
 
-            if existing_user:
-                flash('Email already registered. Please use a different email.', 'danger')
-            else:
-                cursor.execute("INSERT INTO User (email, password) VALUES (%s, %s)", (email, hashed_password))
-                conn.commit()
-                flash('Registration successful! You can now log in.', 'success')
-                return redirect(url_for('login'))
-        except mysql.connector.Error as err:
-            flash(f'Error: {err}', 'danger')
-        finally:
-            cursor.close()
-            conn.close()
+        if existing_user:
+            flash('Email already registered. Please use a different email.', 'danger')
+        else:
+            new_user = User(email=email, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Registration successful! You can now log in.', 'success')
+            return redirect(url_for('login'))
 
     return render_template('register.html')
 
@@ -58,20 +96,14 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        conn = get_db_connection()
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM User WHERE email = %s", (email,))
-        user = cursor.fetchone()
+        user = User.query.filter_by(email=email).first()
 
-        if user and check_password_hash(user['password'], password):
-            session['user_id'] = user['id']
+        if user and check_password_hash(user.password, password):
+            session['user_id'] = user.id
             flash('Login successful!', 'success')
             return redirect(url_for('home'))
         else:
             flash('Login failed. Check your email and/or password.', 'danger')
-
-        cursor.close()
-        conn.close()
 
     return render_template('login.html')
 
@@ -91,12 +123,9 @@ def entries():
         content = request.form['content']
         user_id = session['user_id']
 
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO Entries (content, user_id, time) VALUES (%s, %s, NOW())", (content, user_id))
-        conn.commit()
-        cursor.close()
-        conn.close()
+        new_entry = Entry(content=content, user_id=user_id)
+        db.session.add(new_entry)
+        db.session.commit()
 
         flash('Entry created successfully!', 'success')
         return redirect(url_for('entries'))
@@ -110,23 +139,14 @@ def random_entry():
         return redirect(url_for('login'))
 
     user_id = session['user_id']
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    entry = Entry.query.filter_by(user_id=user_id).order_by(db.func.random()).first()
 
-    cursor.execute("SELECT COUNT(*) as entry_count FROM Entries WHERE user_id = %s", (user_id,))
-    result = cursor.fetchone()
-
-    if result['entry_count'] == 0:
+    if not entry:
         flash('You have no entries to display.', 'warning')
         return redirect(url_for('entries'))
-    # Fetch a random entry for the logged-in user
-    cursor.execute("SELECT * FROM Entries WHERE user_id = %s ORDER BY RAND() LIMIT 1", (user_id,))
-    entry = cursor.fetchone()
-    entry_id = entry['entry_id']
-    cursor.execute("DELETE FROM Entries WHERE entry_id = %s AND user_id = %s", (entry_id, user_id))
-    conn.commit()
-    cursor.close()
-    conn.close()
+
+    db.session.delete(entry)
+    db.session.commit()
 
     return render_template('random_entry.html', random_entry=entry)
 
@@ -137,24 +157,14 @@ def view_entries():
         return redirect(url_for('login'))
 
     user_id = session['user_id']
-    order_param = request.args.get('order_by', 'DESC').upper() 
+    order_param = request.args.get('order_by', 'DESC').upper()
 
     if order_param == "ASC":
-        order_by = "ASC"
+        entries = Entry.query.filter_by(user_id=user_id).order_by(Entry.time.asc()).all()
     else:
-        order_by = "DESC"
+        entries = Entry.query.filter_by(user_id=user_id).order_by(Entry.time.desc()).all()
 
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    query = "SELECT * FROM Entries WHERE user_id = %s ORDER BY time " + order_by
-    cursor.execute(query, (user_id,))  
-
-    entries = cursor.fetchall()
-    cursor.close()
-    conn.close()
-
-    return render_template('view_entries.html', entries=entries, current_order=order_by)
+    return render_template('view_entries.html', entries=entries, current_order=order_param)
 
 if __name__ == '__main__':
     app.run(debug=True)
