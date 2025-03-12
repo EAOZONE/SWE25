@@ -1,4 +1,6 @@
 import unittest
+from asyncio import create_task
+
 from app import app
 
 class FlaskAppFunctionalTests(unittest.TestCase):
@@ -21,8 +23,10 @@ class FlaskAppFunctionalTests(unittest.TestCase):
             'email': 'testuser@example.com',
             'password': 'testpassword'
         })
-        response = self.client.get('/login')
+        print(registerResponse.data)
+
         self.assertEqual(registerResponse.status_code, 302)  # Expect a redirect after successful registration
+        response = self.client.get('/login')
         self.assertIn(b'Registration successful!', response.data)  # Check for success message
 
     def test_register_existing_user(self):
@@ -89,9 +93,49 @@ class FlaskAppFunctionalTests(unittest.TestCase):
             'password': 'testpassword'
         })  # Log in the user
 
-        response = self.client.post('/delete')
-        self.assertEqual(response.status_code, 302)  # Expect a redirect after logout
+        deleteResponse = self.client.post('/delete')
+        response = self.client.get('/')
+        self.assertEqual(deleteResponse.status_code, 302)  # Expect a redirect
         self.assertIn(b'You have been deleted.', response.data)  # Check for logout message
+
+
+    def test_create_entry(self):
+        # Test if the create_entry page loads successfully when logged in
+        self.client.post('/login', data={
+            'email': 'testuser@example.com',
+            'password': 'testpassword'
+        })  # Log in the user
+        createResponse = self.client.post('/entries', data={
+                                          'content': 'This is a test entry'
+        })
+        self.assertEqual(createResponse.status_code, 200)  # Expect to stay in same page
+        self.assertIn(b'Entry created successfully!', createResponse.data)
+        self.client.get('/random_entry')
+
+
+    def test_random_entry_with_entry(self):
+        # Test if the random_entry page loads successfully when logged in
+        self.client.post('/login', data={
+            'email': 'testuser@example.com',
+            'password': 'testpassword'
+        })  # Log in the user
+        self.client.post('/entries', data={
+            'content': 'This is a test entry'
+        })
+        randomResponse = self.client.get('/random_entry')
+        self.assertEqual(randomResponse.status_code, 200)
+        self.assertIn(b'Random Entry', randomResponse.data)
+
+    def test_random_entry_without_entry(self):
+        # Test if the random_entry page loads successfully when logged in
+        self.client.post('/login', data={
+            'email': 'testuser@example.com',
+            'password': 'testpassword'
+        })  # Log in the user
+        randomResponse = self.client.get('/random_entry')
+        response = self.client.get('/entries')
+        self.assertEqual(randomResponse.status_code, 302)
+        self.assertIn(b'Create a New Entry', response.data)
 
 if __name__ == '__main__':
     unittest.main()
