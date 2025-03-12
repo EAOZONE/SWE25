@@ -127,6 +127,7 @@ def delete():
     user_id = session['user_id']
     print(user_id)
     cursor.execute("DELETE FROM User WHERE id = %s", (user_id,))
+    cursor.execute("DELETE FROM Entries WHERE user_id = %s", (user_id,))
     conn.commit()
     flash('You have been deleted.', 'success')
     cursor.close()
@@ -153,7 +154,6 @@ def entries():
         conn.close()
 
         flash('Entry created successfully!', 'success')
-        return redirect(url_for('entries'))
 
     return render_template('entries.html')
 
