@@ -17,19 +17,16 @@ class FlaskAppFunctionalTests(unittest.TestCase):
 
     def test_register_user(self):
         # Test user registration
-        response = self.client.post('/register', data={
+        registerResponse = self.client.post('/register', data={
             'email': 'testuser@example.com',
             'password': 'testpassword'
         })
-        self.assertEqual(response.status_code, 200)  # Expect a redirect after successful registration
+        response = self.client.get('/login')
+        self.assertEqual(registerResponse.status_code, 302)  # Expect a redirect after successful registration
         self.assertIn(b'Registration successful!', response.data)  # Check for success message
 
     def test_register_existing_user(self):
         # Test registration with an already existing email
-        self.client.post('/register', data={
-            'email': 'testuser@example.com',
-            'password': 'testpassword'
-        })  # Register the user first
 
         response = self.client.post('/register', data={
             'email': 'testuser@example.com',
@@ -46,16 +43,12 @@ class FlaskAppFunctionalTests(unittest.TestCase):
 
     def test_login_user(self):
         # Test user login
-        self.client.post('/register', data={
-            'email': 'testuser@example.com',
-            'password': 'testpassword'
-        })  # Register the user first
-
-        response = self.client.post('/login', data={
+        loginResponse = self.client.post('/login', data={
             'email': 'testuser@example.com',
             'password': 'testpassword'
         })
-        self.assertEqual(response.status_code, 302)  # Expect a redirect after successful login
+        response = self.client.get('/')
+        self.assertEqual(loginResponse.status_code, 302)  # Expect a redirect after successful login
         self.assertIn(b'Login successful!', response.data)  # Check for success message
 
     def test_login_invalid_user(self):
@@ -69,25 +62,18 @@ class FlaskAppFunctionalTests(unittest.TestCase):
 
     def test_logout_user(self):
         # Test user logout
-        self.client.post('/register', data={
-            'email': 'testuser@example.com',
-            'password': 'testpassword'
-        })  # Register the user first
         self.client.post('/login', data={
             'email': 'testuser@example.com',
             'password': 'testpassword'
         })  # Log in the user
 
-        response = self.client.post('/logout')
-        self.assertEqual(response.status_code, 302)  # Expect a redirect after logout
+        logoutResponse = self.client.post('/logout')
+        response = self.client.get('/')
+        self.assertEqual(logoutResponse.status_code, 302)  # Expect a redirect after logout
         self.assertIn(b'You have been logged out.', response.data)  # Check for logout message
 
     def test_entries_page(self):
         # Test if the entries page loads successfully when logged in
-        self.client.post('/register', data={
-            'email': 'testuser@example.com',
-            'password': 'testpassword'
-        })  # Register the user first
         self.client.post('/login', data={
             'email': 'testuser@example.com',
             'password': 'testpassword'
@@ -96,6 +82,16 @@ class FlaskAppFunctionalTests(unittest.TestCase):
         response = self.client.get('/entries')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Create Entry', response.data)  # Check for a keyword in the HTML
+    def test_delete_user(self):
+        # Test user logout
+        self.client.post('/login', data={
+            'email': 'testuser@example.com',
+            'password': 'testpassword'
+        })  # Log in the user
+
+        response = self.client.post('/delete')
+        self.assertEqual(response.status_code, 302)  # Expect a redirect after logout
+        self.assertIn(b'You have been deleted.', response.data)  # Check for logout message
 
 if __name__ == '__main__':
     unittest.main()
