@@ -1,3 +1,5 @@
+import time
+
 import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -75,14 +77,14 @@ def register():
             existing_user = cursor.fetchone()
 
             if existing_user:
-                flash('Email already registered. Please use a different email.', 'danger')
+                flash('Email already registered. Please use a different email.', 'error')
             else:
                 cursor.execute("INSERT INTO User (email, password) VALUES (%s, %s)", (email, hashed_password))
                 conn.commit()
                 flash('Registration successful! You can now log in.', 'success')
                 return redirect(url_for('login'))
         except mysql.connector.Error as err:
-            flash(f'Error: {err}', 'danger')
+            flash(f'Error: {err}', 'error')
         finally:
             cursor.close()
             conn.close()
@@ -105,7 +107,7 @@ def login():
             flash('Login successful!', 'success')
             return redirect(url_for('home'))
         else:
-            flash('Login failed. Check your email and/or password.', 'danger')
+            flash('Login failed. Check your email and/or password.', 'error')
 
         cursor.close()
         conn.close()
@@ -125,6 +127,7 @@ def delete():
     user_id = session['user_id']
     print(user_id)
     cursor.execute("DELETE FROM User WHERE id = %s", (user_id,))
+    cursor.execute("DELETE FROM Entries WHERE user_id = %s", (user_id,))
     conn.commit()
     flash('You have been deleted.', 'success')
     cursor.close()
@@ -136,7 +139,7 @@ def delete():
 @app.route('/entries', methods=['POST', 'GET'])
 def entries():
     if 'user_id' not in session:
-        flash('You need to log in first.', 'danger')
+        flash('You need to log in first.', 'error')
         return redirect(url_for('login'))
 
     if request.method == 'POST':
@@ -151,14 +154,13 @@ def entries():
         conn.close()
 
         flash('Entry created successfully!', 'success')
-        return redirect(url_for('entries'))
 
     return render_template('entries.html')
 
 @app.route('/random_entry', methods=['GET'])
 def random_entry():
     if 'user_id' not in session:
-        flash('You need to log in first.', 'danger')
+        flash('You need to log in first.', 'error')
         return redirect(url_for('login'))
 
     user_id = session['user_id']
@@ -169,7 +171,7 @@ def random_entry():
     result = cursor.fetchone()
 
     if result['entry_count'] == 0:
-        flash('You have no entries to display.', 'warning')
+        flash('You have no entries to display.', 'error')
         return redirect(url_for('entries'))
     # Fetch a random entry for the logged-in user
     cursor.execute("SELECT * FROM Entries WHERE user_id = %s ORDER BY RAND() LIMIT 1", (user_id,))

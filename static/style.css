@@ -46,3 +46,17 @@ a {
 .header button:hover {
     background-color: #4cae4c;
 }
+
+
+/*For Flash Messages*/
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
