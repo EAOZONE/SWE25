@@ -118,6 +118,21 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
+@app.route('/delete', methods=['POST'])
+def delete():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    user_id = session['user_id']
+    print(user_id)
+    cursor.execute("DELETE FROM User WHERE id = %s", (user_id,))
+    conn.commit()
+    flash('You have been deleted.', 'success')
+    cursor.close()
+    conn.close()
+    session.pop('user_id', None)
+    return redirect(url_for('home'))
+
+
 @app.route('/entries', methods=['POST', 'GET'])
 def entries():
     if 'user_id' not in session:
