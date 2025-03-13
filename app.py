@@ -1,6 +1,7 @@
 import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_cors import CORS # type: ignore
+import time
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 
@@ -92,15 +93,12 @@ def register():
 
     return jsonify({"message": "Registration successful"}), 201
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         data = request.json
         email = data.get("email")
         password = data.get("password")
-
-        print(f"🔍 Login attempt - Email: {email}, Password: {password}")
         
         if not email or not password:
             return jsonify({"error": "Email and password are required"}), 400
@@ -122,8 +120,7 @@ def login():
     
         session["user_id"] = user["id"]
         session.permanent = True
-        print(f"Login successful! Session stored: {session}")
-
+  
         return jsonify({"message": "Login successful!", "user_id": user["id"]}), 200
 
         
@@ -139,8 +136,7 @@ def entries():
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-
-
+    
     if request.method == 'POST':
         data = request.json
         content = data.get("content")
@@ -148,13 +144,12 @@ def entries():
 
         if not content:
             return jsonify ({"error": "Content is required" })
-        
-    
+     
         cursor.execute("INSERT INTO Entries (content, user_id, time) VALUES (%s, %s, NOW())", (content, user_id))
         conn.commit()
         cursor.close()
         conn.close()
-
+        
         return jsonify({"message": "Entry created successfully!"}), 201
     
     elif request.method == 'GET':
@@ -171,22 +166,23 @@ def entries():
 def random_entry():
     if 'user_id' not in session:
         return jsonify({"error": "You need to log in first"}), 401
-
+      
     user_id = session['user_id']
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-
+    
     try: 
         cursor.execute("SELECT COUNT(*) as entry_count FROM Entries WHERE user_id = %s", (user_id,))
         result = cursor.fetchone()
 
         if result['entry_count'] == 0:
             return jsonify({"error": "No entries found"}), 404
-    # Fetch a random entry for the logged-in user
+          
+    # fetch a random entry
         cursor.execute("SELECT * FROM Entries WHERE user_id = %s ORDER BY RAND() LIMIT 1", (user_id,))
         entry = cursor.fetchone()
         if not entry:
-            return jsonify({"error": "Fialed to retrieve entry"}), 500
+            return jsonify({"error": "Failed to retrieve entry"}), 500
         
         return jsonify(entry), 200
     
@@ -212,7 +208,7 @@ def view_entries():
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-
+    
     try: 
         query = "SELECT * FROM Entries WHERE user_id = %s ORDER BY time " + order_by
         cursor.execute(query, (user_id,))
@@ -234,6 +230,20 @@ def fetch_streak():
     streak = get_streak(user_id)
     return jsonify({"streak": streak})
 
+@app.route('/delete', methods=['POST'])
+def delete():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    user_id = session['user_id']
+    print(user_id)
+    cursor.execute("DELETE FROM User WHERE id = %s", (user_id,))
+    cursor.execute("DELETE FROM Entries WHERE user_id = %s", (user_id,))
+    conn.commit()
+    flash('You have been deleted.', 'success')
+    cursor.close()
+    conn.close()
+    session.pop('user_id', None)
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)
