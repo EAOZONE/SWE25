@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
@@ -6,16 +6,20 @@ import "./Home.css";
 function Home() {
     const navigate = useNavigate();
     const [streak, setStreak] = useState(0);
+    const streakFetched = useRef(false);
 
     useEffect(() => {
-        fetch("/streak", { credentials: "include" })
-            .then(response => response.json())
-            .then(data => {
-                if (data.streak !== undefined) {
-                    setStreak(data.streak);
-                }
-            })
-            .catch(error => console.error("Error fetching streak:", error));
+        if (!streakFetched.current) {
+            streakFetched.current = true;
+            fetch("/streak", { credentials: "include" })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.streak !== undefined) {
+                        setStreak(data.streak);
+                    }
+                })
+                .catch(error => console.error("Error fetching streak:", error));
+        }
     }, []);
 
     const handleLogout = () => {
