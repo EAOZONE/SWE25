@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle, #eef2f6 30%, #d9e4ec);
+}
+.playfair-display-font> {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.roboto-font {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  }
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    text-align: center;
+}
+
+.home-title {
+    font-family: "Playfair Display", serif;
+    font-size: 70px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #233c67;
+}
+
+.streak-text {
+    font-size: 25px;
+    color: #6888be;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.jar-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.jar-image {
+    width: 400px;
+    display: block;
+    transition: transform 0.3s ease-in-out, filter 0.3s;
+    filter: drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.2));
+}
+
+.jar-container:hover .jar-image {
+    animation: wiggle 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(2deg); }
+}
+
+.jar-button {
+    position: absolute;
+    font-weight: bold;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #6888be;
+    padding: 12px 10px;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: 175px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.jar-button:hover {
+    box-shadow: 0px 4px 8px #233c67;
+}
+
+.button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-custom {
+    width: 200px;
+    padding: 12px 0;
+    font-size: 16px;
+    border-radius: 15px;
+    transition: 0.3s ease-in-out;
+    background-color: #6888be !important;
+    border: none;
+    color: white;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+.btn-custom:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 4px 8px #233c67;
+}
+
+.hearts-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* so they don't interfere with clicks */
+}
+
+.heart {
+    position: absolute;
+    width: 60px; 
+    height: auto;
+    opacity: 0.7; 
+    transition: transform 0.3s ease-in-out;
+}
+
+.heart-two {
+    position: absolute;
+    width: 70px; 
+    height: auto;
+    opacity: 0.7; 
+    transition: transform 0.3s ease-in-out;
+}
+
+.heart-three {
+    position: absolute;
+    width: 80px; 
+    height: auto;
+    opacity: 0.7; 
+    transition: transform 0.3s ease-in-out;
+}
+
+
+
