@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 
 function RandomEntry() {
@@ -6,6 +6,7 @@ function RandomEntry() {
   const [entry, setEntry] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const fetchCalled = useRef(false);
 
   const fetchRandomEntry = async () => {
     setLoading(true);
@@ -27,6 +28,13 @@ function RandomEntry() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!fetchCalled.current) {
+      fetchCalled.current = true;
+      fetchRandomEntry();
+    }
+  }, []);
 
   return (
     <div className="random-entry-container">
