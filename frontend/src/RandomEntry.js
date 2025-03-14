@@ -41,14 +41,16 @@ function RandomEntry() {
       <h2>Random Gratitude Entry</h2>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {entry ? (
+
+      {!loading ? (
+        entry ? (
         <div className="random-entry">
           <p>{entry.content}</p>
           <small>{new Date(entry.time).toLocaleString()}</small>
         </div>
       ) : (
         <p>No entries found. Start writing gratitude entries!</p>
-      )}
+      )):null}
       <button onClick={fetchRandomEntry}>Get Random Entry</button>
       <button type="home-btn" onClick={() => navigate('/home')}>
         Home
