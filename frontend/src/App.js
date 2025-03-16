@@ -8,13 +8,16 @@ import RandomEntry from './RandomEntry';
 import Register from './Register';
 import Header from './Header';
 import Home from './Home';
+import Homepage from './Homepage'
+import '/'
 
 function App() {
   return (
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<TempLogin />} />
+        <Route path="/" element={<Homepage/>} />
+        <Route path="/login" element={<TempLogin />} />
         <Route path='/register' element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/entries" element={<NewEntry />} />
