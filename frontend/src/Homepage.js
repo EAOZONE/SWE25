@@ -13,9 +13,9 @@ const Home = () => {
         <h1 className ="text"> Welcome to Jar of Joy!!!  </h1>
         <h5 className ="summary"> 2025 SWE Project </h5>
         <img src={MyImage} alt="Jar of Joy" />
-        <div className= "button-container">
-        <button onClick={() => navigate("/login")}>Login</button>
-        <button onClick={() => navigate("/register")}>Register</button>
+        <div className= "home-button-container">
+        <button className="btn-custom" onClick={() => navigate("/login")}>Login</button>
+        <button className="btn-custom" onClick={() => navigate("/register")}>Register</button>
         </div>
     </div>
     )
