@@ -78,6 +78,9 @@ const deleteAllEntries = async () => {
         <button type="home-btn" onClick={deleteAllEntries}>
             Clear All Entries
         </button>
+      <button type="home-btn" onClick={() => navigate('/entries')}>
+        Write an Entry
+      </button>
       <button type="home-btn"onClick={() => navigate('/home')}>
           Home
       </button>
