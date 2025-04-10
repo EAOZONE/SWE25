@@ -59,6 +59,7 @@ function RandomEntry() {
             )) : null}
         <button onClick={fetchRandomEntry}>Get Random Entry</button>
         <button onClick={handleTweet}>
+            <img src="/images/twitter.png" alt="Twitter" style={{ width: '30px', marginRight: '5px' }} />
           Share on Twitter
         </button>
         <button type="home-btn" onClick={() => navigate('/home')}>
