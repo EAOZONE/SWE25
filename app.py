@@ -221,7 +221,16 @@ def view_entries():
     finally:
         cursor.close()
         conn.close()
-
+@app.route('/delete_entries', methods=['POST'])
+def delete_entries():
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("DELETE FROM Entries WHERE user_id = %s", (user_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return jsonify({"message": "All entries deleted successfully"}), 200
 @app.route('/streak', methods=['GET'])
 def fetch_streak():
     if 'user_id' not in session:

@@ -8,6 +8,34 @@ const ViewEntries = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+const deleteAllEntries = async () => {
+  try {
+    const response = await fetch('/delete_entries', {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const rawBody = await response.text(); // read once
+
+      let errorMessage = 'Failed to delete entries.';
+      try {
+        const data = JSON.parse(rawBody); // try to parse JSON from raw text
+        errorMessage = data.error || errorMessage;
+      } catch (e) {
+        console.error('Non-JSON error response:', rawBody);
+      }
+
+      throw new Error(errorMessage);
+    }
+
+    setEntries([]);
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
+
   useEffect(() => {
     const fetchEntries = async () => {
       try {
@@ -47,6 +75,9 @@ const ViewEntries = () => {
           ))}
         </ul>
       )}
+        <button type="home-btn" onClick={deleteAllEntries}>
+            Clear All Entries
+        </button>
       <button type="home-btn"onClick={() => navigate('/home')}>
           Home
       </button>
