@@ -30,6 +30,10 @@ function RandomEntry() {
   };
 
   const handleTweet = () => {
+    if (!entry) {
+      alert("No entry to share!\nWrite a gratitude entry first.");
+      return;
+    }
     const tweetText = encodeURIComponent(`${entry.content}\n#JarOfJoy #Gratitude`);
     const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
     window.open(tweetUrl, "_blank");
@@ -59,6 +63,7 @@ function RandomEntry() {
             )) : null}
         <button onClick={fetchRandomEntry}>Get Random Entry</button>
         <button onClick={handleTweet}>
+            <img src="/images/twitter.png" alt="Twitter" style={{ width: '30px', marginRight: '5px' }} />
           Share on Twitter
         </button>
         <button type="home-btn" onClick={() => navigate('/home')}>
