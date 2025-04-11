@@ -25,10 +25,29 @@ function Header() {
         .catch(error => console.error("Logout error:", error));
         toggleProfile();
     };
-  const handleNotifications = () => {
-        navigate('/notifications');
-        toggleProfile(); // Call toggleProfile when navigating to notifications
-    };
+const handleNotifications = () => {
+    fetch("/notifications", {
+        method: "POST",
+        credentials: "include"
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                console.error("Notification Error:", errorData);
+                return Promise.reject(errorData);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Notifications:", data);
+        navigate("/notifications");
+    })
+    .catch(error => {
+        console.error("Notification:", error);
+    });
+    toggleProfile();
+};
 
     return (
         <header className="header">
