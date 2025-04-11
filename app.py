@@ -239,20 +239,5 @@ def fetch_streak():
     streak = get_streak(user_id)
     return jsonify({"streak": streak})
 
-@app.route('/delete', methods=['POST'])
-def delete():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    user_id = session['user_id']
-    print(user_id)
-    cursor.execute("DELETE FROM User WHERE id = %s", (user_id,))
-    cursor.execute("DELETE FROM Entries WHERE user_id = %s", (user_id,))
-    conn.commit()
-    flash('You have been deleted.', 'success')
-    cursor.close()
-    conn.close()
-    session.pop('user_id', None)
-    return redirect(url_for('home'))
-
 if __name__ == '__main__':
     app.run(debug=True)

@@ -49,9 +49,20 @@
 
 .logout-button {
     position: absolute;
-    top: 100%; /* Position below the profile icon */
+    top: 250%; /* Position below the profile icon */
     right: 0;
     background-color: #ff4d4d; /* Red background for logout */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+.notification-button {
+    position: absolute;
+    top: 150%; /* Position below the profile icon */
+    right: 0;
+    background-color: #6787bd; /* Red background for logout */
     color: white;
     border: none;
     padding: 5px 10px;

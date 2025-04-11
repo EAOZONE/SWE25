@@ -5,9 +5,11 @@ import "./Header.css";
 function Header() {
     const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState(false);
+    const [showNotifications, setShowNotifications] = useState(false);
 
-    const toggleLogout = () => {
+    const toggleProfile = () => {
         setShowLogout(!showLogout);
+        setShowNotifications(!showNotifications);
     };
 
         const handleLogout = () => {
@@ -21,8 +23,14 @@ function Header() {
             navigate("/"); // Redirect to login page
         })
         .catch(error => console.error("Logout error:", error));
-        toggleLogout();
+        toggleProfile();
     };
+        const handleNotifications = () => {
+        fetch("/notifications", {
+            method: "POST",
+            credentials: "include"
+        })
+        }
 
     return (
         <header className="header">
@@ -31,12 +39,17 @@ function Header() {
                     jar of joy
                 </h1>
                 <div className="profile-container">
-                    <button className="profile-icon" onClick={toggleLogout}>
+                    <button className="profile-icon" onClick={toggleProfile}>
                         👤 {/* Replace with an actual icon if needed */}
                     </button>
                     {showLogout && (
                         <button className="logout-button" onClick={handleLogout}>
                             Logout
+                        </button>
+                    )}
+                    {showNotifications && (
+                        <button className="notification-button" onClick={() => navigate('/notifications')}>
+                            Notifications
                         </button>
                     )}
                 </div>
