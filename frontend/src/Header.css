@@ -5,16 +5,16 @@
     font-weight: 400;
     font-style: normal;
 }
-  
+
 .cabin-sketch-bold {
     font-family: "Cabin Sketch", sans-serif;
     font-weight: 700;
     font-style: normal;
 }
-  
+
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Center the content */
     align-items: center;
     padding: 3px;
     background-color: #acc9ee;
@@ -23,11 +23,49 @@
 .header-brand {
     font-size: 70px;
     color: #233c67;
+    margin: 0 auto; /* Center the brand */
 }
 
 .container {
-    display: flex;  
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Space between brand and profile */
+    align-items: center; /* Center items vertically */
+    width: 100%; /* Ensure it takes full width */
+    max-width: 1200px; /* Optional: Set a max width for the header */
+}
+
+.profile-container {
+    position: relative;
+    display: flex; /* Align items in a row */
+    align-items: center; /* Center items vertically */
+}
+
+.profile-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px; /* Adjust size as needed */
+}
+
+.logout-button {
+    position: absolute;
+    top: 250%; /* Position below the profile icon */
+    right: 0;
+    background-color: #ff4d4d; /* Red background for logout */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+.notification-button {
+    position: absolute;
+    top: 150%; /* Position below the profile icon */
+    right: 0;
+    background-color: #6787bd; /* Red background for logout */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 5px;
 }

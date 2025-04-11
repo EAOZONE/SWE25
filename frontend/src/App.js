@@ -10,6 +10,7 @@ import Header from './Header';
 import Home from './Home';
 import Homepage from './Homepage'
 import '/'
+import Notifications from "./Notification";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/entries" element={<NewEntry />} />
         <Route path="/view_entries" element={<ViewEntries />} />
         <Route path="/random_entry" element={<RandomEntry />} />
+        <Route path="/notifications" element={<Notifications />} />
       </Routes>
     </Router>
   );

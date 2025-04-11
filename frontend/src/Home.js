@@ -22,19 +22,6 @@ function Home() {
         }
     }, []);
 
-    const handleLogout = () => {
-        fetch("/logout", {
-            method: "POST",
-            credentials: "include"
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Logged out:", data);
-            navigate("/"); // Redirect to login page
-        })
-        .catch(error => console.error("Logout error:", error));
-    };
-
     return (
         <div className="home-container">
             <h1 className="home-title">Welcome!</h1>
@@ -53,11 +40,6 @@ function Home() {
                 </button>
                 <button className="btn-custom" onClick={() => navigate('/random_entry')}>
                     Random Entry
-                </button>
-                <button 
-                    className="btn-custom" 
-                    onClick={handleLogout}>
-                    Logout
                 </button>
             </div>
         </div>
