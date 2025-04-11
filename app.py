@@ -238,6 +238,11 @@ def fetch_streak():
     user_id = session['user_id']
     streak = get_streak(user_id)
     return jsonify({"streak": streak})
+@app.route('/notifications', methods=['POST'])
+def notifications():
+    if 'user_id' not in session:
+        return jsonify({"error": "You need to log in first"}), 401
+    return jsonify({"notifications": "Go ahead"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
