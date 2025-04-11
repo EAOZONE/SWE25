@@ -1,19 +1,27 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useState, useEffect, useRef} from "react";
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
 function Header() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState(false);
 
     const toggleLogout = () => {
         setShowLogout(!showLogout);
     };
 
-    const handleLogout = () => {
-        // Add your logout logic here
-        setIsLoggedIn(false);
-        setShowLogout(false);
+        const handleLogout = () => {
+        fetch("/logout", {
+            method: "POST",
+            credentials: "include"
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Logged out:", data);
+            navigate("/"); // Redirect to login page
+        })
+        .catch(error => console.error("Logout error:", error));
+        toggleLogout();
     };
 
     return (
