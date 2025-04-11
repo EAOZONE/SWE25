@@ -69,3 +69,14 @@
     cursor: pointer;
     margin-top: 5px;
 }
+.delete-button {
+    position: absolute;
+    top: 350%; /* Position below the profile icon */
+    right: 0;
+    background-color: #6787bd; /* Red background for logout */
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
+    margin-top: 5px;
+}

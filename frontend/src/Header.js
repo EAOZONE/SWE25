@@ -6,10 +6,12 @@ function Header() {
     const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
 
     const toggleProfile = () => {
         setShowLogout(!showLogout);
         setShowNotifications(!showNotifications);
+        setShowDelete(!showDelete);
     };
 
         const handleLogout = () => {
@@ -48,6 +50,29 @@ const handleNotifications = () => {
     });
     toggleProfile();
 };
+const handleDelete = () => {
+    fetch("/deleteAccount", {
+        method: "POST",
+        credentials: "include"
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                console.error("Error:", errorData);
+                return Promise.reject(errorData);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Delete:", data);
+        navigate("/");
+    })
+    .catch(error => {
+        console.error("Delete:", error);
+    });
+    toggleProfile();
+}
 
     return (
         <header className="header">
@@ -67,6 +92,11 @@ const handleNotifications = () => {
                     {showNotifications && (
                         <button className="notification-button" onClick={handleNotifications}>
                             Notifications
+                        </button>
+                    )}
+                    {showDelete && (
+                        <button className="delete-button" onClick={handleDelete}>
+                            Delete Account
                         </button>
                     )}
                 </div>

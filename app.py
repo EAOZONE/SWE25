@@ -243,6 +243,21 @@ def notifications():
     if 'user_id' not in session:
         return jsonify({"error": "You need to log in first"}), 401
     return jsonify({"notifications": "Go ahead"}), 200
+@app.route('/deleteAccount', methods=['POST'])
+def deleteAccount():
+    if 'user_id' not in session:
+        return jsonify({"error": "You need to log in first"}), 401
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    user_id = session['user_id']
+    print(user_id)
+    cursor.execute("DELETE FROM User WHERE id = %s", (user_id,))
+    cursor.execute("DELETE FROM Entries WHERE user_id = %s", (user_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    session.pop('user_id', None)
+    return jsonify({"message": "Account deleted successfully"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
