@@ -25,12 +25,10 @@ function Header() {
         .catch(error => console.error("Logout error:", error));
         toggleProfile();
     };
-        const handleNotifications = () => {
-        fetch("/notifications", {
-            method: "POST",
-            credentials: "include"
-        })
-        }
+  const handleNotifications = () => {
+        navigate('/notifications');
+        toggleProfile(); // Call toggleProfile when navigating to notifications
+    };
 
     return (
         <header className="header">
@@ -48,7 +46,7 @@ function Header() {
                         </button>
                     )}
                     {showNotifications && (
-                        <button className="notification-button" onClick={() => navigate('/notifications')}>
+                        <button className="notification-button" onClick={handleNotifications}>
                             Notifications
                         </button>
                     )}
