@@ -57,6 +57,7 @@ function Login() {
       </form>
       <p>Don't have an account?</p>
       <button onClick={() => navigate('/register')}>Register</button>
+      <button onClick={() => navigate('/')}>Home</button>
     </div>
   );
 };

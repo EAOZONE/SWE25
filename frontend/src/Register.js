@@ -56,6 +56,7 @@ function Register() {
       </form>
       <p>Already have an account?</p>
       <button onClick={() => navigate('/Login')}>Back to Login</button>
+      <button onClick={() => navigate('/')}>Home</button>
     </div>
   );
 };
