@@ -1,7 +1,7 @@
 
 
 .register-container{
-background-color: #94c5e5;
+
   color: #126fab ;
   max-width: 400px;
   margin: 150px auto;
@@ -47,7 +47,7 @@ background-color: #94c5e5;
     padding: 12px;
   width: 50%;
   height: auto;
-  border-radius: 12px;
+  border-radius: 30px;
   border: 7px;
 
 
