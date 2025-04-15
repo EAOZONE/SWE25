@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "./Register.css";
+import MyImage from "./462590367d13795d37f45b23d092745b.jpg"
+
+
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -31,6 +35,7 @@ function Register() {
   return (
     <div className="register-container">
       <h1>Register</h1>
+      <img src={MyImage} alt=""/>
       {message && <p>{message}</p>}
       <form onSubmit={handleRegister}>
         <input

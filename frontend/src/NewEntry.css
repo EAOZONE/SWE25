@@ -1,0 +1,55 @@
+.entry-container {
+  background-color: #94c5e5;
+  color: #8dc1e3;
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.entry-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #166395;
+  font-family: Arial;
+}
+
+
+.entry-container p {
+  margin-bottom: 20px;
+  color: #03446e;
+}
+
+
+.entry-container textarea {
+  width: 100%;
+  height: 100px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  resize: vertical;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  background-color:#abdcfb;
+  color: #186a9f;
+}
+
+
+.entry-container button {
+  padding: 12px 24px;
+  font-size: 16px;
+  margin: 10px 5px;
+  border: none;
+  border-radius: 6px;
+  background-color: #c1e7fe;
+  color: #186a9f;
+  cursor: pointer;
+
+}
+
+.entry-container button:hover {
+  background-color: #82bde3;
+}
