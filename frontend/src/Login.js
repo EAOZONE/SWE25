@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import "./Login.css";
+import MyImage from "./efea45499e4aeaad2f9b0c13bff9f8ad.jpg"
 
 // console.log("Rendering Login page"); dubigging
 
@@ -35,6 +36,7 @@ function Login() {
   return (
     <div className="login-container">
       <h2>Login</h2>
+       <img src={MyImage} alt=""/>
       {message && <p>{message}</p>}
       <form onSubmit={handleLogin}>
         <input

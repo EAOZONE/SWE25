@@ -68,7 +68,7 @@ def home():
 def register():
     data = request.json
     if not data or "email" not in data or "password" not in data:
-        return jsonify({"error": "Email and passoword are required to register"}), 400
+        return jsonify({"error": "Email and password are required to register"}), 400
     
     email = data['email']
     password = data['password']
