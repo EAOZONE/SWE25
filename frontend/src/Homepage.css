@@ -1,11 +1,6 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #d4e2cd;
-}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-/* Home container setup */
+
 .home-container {
     display: flex;
     flex-direction: column;
@@ -15,43 +10,29 @@ body {
     padding-top: 50px;
 }
 
-/* Text section */
+
 .text {
     text-align: center;
-
 }
 
-.summary{
-    color: black;
+.home-txt {
+    font-family: "Playfair Display", serif;
+    font-weight: bold;
+    color: #5672a6;
+    font-size: 90px;
 }
-
 
 .home-container img {
     display: block;
     width: 300px;
     height: auto;
+    padding-bottom: 50px;
+    padding-top: 50px;
 }
 
 .home-button-container{
-    display: flex;
-    justify-content: space-between;
+   display: flex;
+    justify-content: center;
     gap: 25px;
-    width: 200px;
 }
 
-.button {
-    padding: 10px 10px;
-    background-color: #b5cda9;
-    color: green;
-    border: none;
-    cursor: pointer;
-    position: fixed;
-    top: 650px;
-    width: 200px;
-    height: 50px;
-
-}
-
-.button:hover {
-    background-color: #7ca666;
-}

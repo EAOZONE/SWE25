@@ -35,7 +35,8 @@ function Register() {
   return (
     <div className="register-container">
       <h1>Register</h1>
-      <img src={MyImage} alt=""/>
+      {/*<img src={MyImage} alt=""/>*/}
+
       {message && <p>{message}</p>}
       <form onSubmit={handleRegister}>
         <input
@@ -52,11 +53,11 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Register</button>
+        <button className='btn-custom'>Register</button>
       </form>
       <p>Already have an account?</p>
-      <button onClick={() => navigate('/Login')}>Back to Login</button>
-      <button onClick={() => navigate('/')}>Home</button>
+      <button className='btn-custom' onClick={() => navigate('/Login')}>Back to Login</button>
+      <button className='btn-custom' onClick={() => navigate('/')}>Home</button>
     </div>
   );
 };

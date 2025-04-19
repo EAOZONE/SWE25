@@ -1,7 +1,5 @@
 
-
 .register-container{
-
   color: #126fab ;
   max-width: 400px;
   margin: 150px auto;
@@ -9,26 +7,21 @@
   align: center;
   border-radius: 12px;
   text-align: center;
-  font-family: Arial, sans-serif;
+  font-family: "Playfair Display", serif;
 }
+
 .register-container h1{
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #166395;
-     font-family: Arial;
+    font-size: 50px;
+    margin-bottom: 50px;
+    color: #163695;
+     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .register-container button {
- padding: 10px 20px;
-  font-size: 16px;
   margin: 20px 10px;
-  border: none;
-  border-radius: 6px;
-  background-color: #c1e7fe;
-  color: #186a9f;
-  cursor: pointer;
-
 }
+
+
 .register-container input {
   margin: 15px;
   padding: 12px;

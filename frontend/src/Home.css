@@ -1,12 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: radial-gradient(circle, #eef2f6 30%, #d9e4ec);
-}
+
 .playfair-display-font> {
     font-family: "Playfair Display", serif;
     font-optical-sizing: auto;
@@ -51,14 +46,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 .jar-image {
-    width: 400px;
-    display: block;
-    transition: transform 0.3s ease-in-out, filter 0.3s;
-    filter: drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.2));
+    width: 100px;
+    height: auto;
+    transition: width 0.3s ease;
 }
 
 .jar-container:hover .jar-image {
@@ -90,23 +84,25 @@ body {
 }
 
 .jar-button:hover {
-    box-shadow: 0px 4px 8px #233c67;
-}
+    background-color: #5672a6;
+  }
 
 .button-container {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
+
+/*
 .btn-custom {
     width: 200px;
     padding: 12px 0;
     font-size: 16px;
     border-radius: 15px;
     transition: 0.3s ease-in-out;
-    background-color: #6888be !important;
+    background-color: #6888be;
     border: none;
     color: white;
     text-align: center;
@@ -115,18 +111,14 @@ body {
     font-weight: bold;
 }
 
-.btn-custom:hover {
-    transform: translateY(-4px);
-    box-shadow: 0px 4px 8px #233c67;
-}
-
+/*
 .hearts-container {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    pointer-events: none; /* so they don't interfere with clicks */
+    pointer-events: none;
 }
 
 .heart {
@@ -152,6 +144,6 @@ body {
     opacity: 0.7; 
     transition: transform 0.3s ease-in-out;
 }
-
+*/
 
 

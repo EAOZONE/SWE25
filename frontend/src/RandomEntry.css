@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+
+.entries-container {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9fafb;
+}
+
+
+
+.center-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.entries-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #6888be;
+  font-family: "Playfair Display", serif;
+  text-align: center;
+}
+
+
+.random-entry-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.entry-content {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.entry-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.entry-time {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.twitter-btn {
+  background-color: #1DA1F2;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.twitter-btn:hover {
+  background-color: #0d8ddb;
+}
+
+.twitter-icon {
+  width: 18px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.twitter-btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.random-nav-buttons-wrapper {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+
+.btn-custom-random {
+  width: 180px;
+  padding: 12px 0;
+  font-size: 16px;
+  border-radius: 15px;
+  background-color: #6888be;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.btn-custom:hover {
+  background-color: #5672a6;
+}

@@ -13,70 +13,62 @@
 }
 
 .header {
+    width: 100%;
     display: flex;
-    justify-content: center; /* Center the content */
-    align-items: center;
-    padding: 3px;
+    justify-content: space-between;
+    padding: 10px 30px;
     background-color: #acc9ee;
+    box-sizing: border-box;
 }
+
 
 .header-brand {
     font-size: 70px;
     color: #233c67;
-    margin: 0 auto; /* Center the brand */
 }
 
 .container {
     display: flex;
-    justify-content: space-between; /* Space between brand and profile */
-    align-items: center; /* Center items vertically */
-    width: 100%; /* Ensure it takes full width */
-    max-width: 1200px; /* Optional: Set a max width for the header */
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%; 
+    max-width: 1200px;
 }
 
 .profile-container {
     position: relative;
-    display: flex; /* Align items in a row */
-    align-items: center; /* Center items vertically */
+    display: flex;
+    align-items: center;
 }
 
 .profile-icon {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 24px; /* Adjust size as needed */
+    font-size: 24px;
+}
+
+.logout-button, .notification-button, .delete-button {
+    position: absolute;
+    right: 0;
+    background-color: #6787bd;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 5px;
 }
 
 .logout-button {
-    position: absolute;
-    top: 250%; /* Position below the profile icon */
-    right: 0;
-    background-color: #ff4d4d; /* Red background for logout */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-top: 5px;
+    top: 179%;
+    background-color: #ff4d4d; /* Red for logout */
 }
+
 .notification-button {
-    position: absolute;
-    top: 150%; /* Position below the profile icon */
-    right: 0;
-    background-color: #6787bd; /* Red background for logout */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-top: 5px;
+    top: 140%;
 }
+
 .delete-button {
-    position: absolute;
-    top: 350%; /* Position below the profile icon */
-    right: 0;
-    background-color: #6787bd; /* Red background for logout */
-    color: white;
-    border: none;
+    top: 75%;
     padding: 5px 20px;
-    cursor: pointer;
-    margin-top: 5px;
 }

@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+.entries-container {
+    min-height: 100vh;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+.entries-header {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 24px;
+}
+  
+.entries-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #6888be;
+    font-family: "Playfair Display", serif;  
+}
+
+.nav-buttons{
+    display: flex;
+    gap: 30px;
+}
+  
+.clear-btn {
+    background-color: #ef4444;
+    color: white;
+    
+}
+  
+.clear-btn:hover {
+    background-color: #dc2626;
+}
+  
+.entries-list {
+    display: grid;
+    gap: 20px;
+    max-width: 800px;
+    width: 100%;
+}
+  
+.entry-card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.2s;   
+}
+
+.entry-content {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+  
+.entry-time {
+    font-size: 0.85rem;
+    color: #777;
+}
+ 
+
+.twitter-btn {
+    background-color: #1DA1F2;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+     margin-top: 10px;
+}
+
+.twitter-btn:hover {
+    background-color: #0d8ddb;
+  }
+  
+.twitter-icon {
+    width: 18px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.twitter-btn-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+.entry-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+} 

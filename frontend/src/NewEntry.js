@@ -17,27 +17,37 @@ function NewEntry() {
     try {
       const response = await fetch('/entries', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content }),
         credentials: 'include',
       });
-
+  
       const data = await response.json();
       if (response.ok) {
-        setMessage('Entry created successfully!');
+        setMessage('New entry added!');
         setContent('');
         fetchEntries();
+  
+        setTimeout(() => {
+          setMessage('');
+        }, 3000);
+  
       } else {
-        console.log("Error here bb") // debuggin
         setMessage(data.error);
+  
+        setTimeout(() => {
+          setMessage('');
+        }, 3000);
       }
     } catch (error) {
-      console.log("Request error")
       setMessage('An error occurred. Please try again.');
+  
+      setTimeout(() => {
+        setMessage('');
+      }, 3000);
     }
-};
+  };
+  
 
   // fetch past gratitude entries
   const fetchEntries = async () => {
@@ -58,21 +68,21 @@ function NewEntry() {
   }, []);
 
   return (
-    <div className="entry-container">
-      <h2>New Gratitude Entry</h2>
-      {message && <p>{message}</p>}
-      <form onSubmit={handleSubmit}>
-        <textarea
-          placeholder="I am grateful for..."
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-        ></textarea>
-        <button type="submit">Submit</button>
-      </form>
-      <button type="home-btn"onClick={() => navigate('/home')}>
-          Home
-      </button>
+    <div className="entry-card new-entry-card">
+      <h2 className="entries-title">New Gratitude Entry</h2>
+      
+      {message && <p className="success-message">{message}</p>}
+     
+      <textarea
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="I am grateful for..."
+        className="entry-textarea"
+      />
+      <div className="button-container">
+        <button className="btn-custom" onClick={handleSubmit}>Submit</button>
+        <button className="btn-custom" onClick={() => navigate('/home')}>Home</button>
+      </div>
     </div>
   );
 };
