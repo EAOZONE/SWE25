@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import './ViewEntries.css'
 
 
 const ViewEntries = () => {
@@ -8,7 +9,21 @@ const ViewEntries = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+
+  const handleTweet = (content) => {
+    if (!content) {
+      alert("No entry to share!\nWrite a gratitude entry first.");
+      return;
+    }
+    const tweetText = encodeURIComponent(`${content}\n#JarOfJoy #Gratitude`);
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+    window.open(tweetUrl, "_blank");
+  };
+  
+
 const deleteAllEntries = async () => {
+  const confirmed = window.confirm("Are you sure you want to delete all entries? This can not be undone.");
+  if (!confirmed) return;
   try {
     const response = await fetch('/delete_entries', {
       method: 'POST',
@@ -62,29 +77,57 @@ const deleteAllEntries = async () => {
 
   return (
     <div className="entries-container">
-      <h2>Your Gratitude Entries</h2>
-      {entries.length === 0 ? (
-        <p>No entries yet. Start writing gratitude notes!</p>
-      ) : (
-        <ul>
-          {entries.map((entry, index) => (
-            <li key={index}>
-              <p>{entry.content}</p>
-              <small>{new Date(entry.time).toLocaleString()}</small>
-            </li>
-          ))}
-        </ul>
-      )}
-        <button type="home-btn" onClick={deleteAllEntries}>
-            Clear All Entries
+      <div className="entries-header">
+        <h2 className="entries-title">Your Gratitude Entries</h2>
+        
+        <div className="nav-buttons">
+          <button onClick={() => navigate('/entries')} className="btn-custom">
+            Write an Entry
+          </button>
+         <button onClick={() => navigate('/home')} className="btn-custom">
+            Home
+         </button>
+        
+
+        {entries.length > 0 && (
+          <button onClick={deleteAllEntries} className="btn-custom clear-btn">
+          Clear All
         </button>
-      <button type="home-btn" onClick={() => navigate('/entries')}>
-        Write an Entry
-      </button>
-      <button type="home-btn"onClick={() => navigate('/home')}>
-          Home
-      </button>
+
+        )}
+        </div>
+        
+
+      </div>
+
+  {entries.length === 0 ? (
+    <p>No entries yet. Add an entry to your jar!</p>
+  ) : (
+    <div className="entries-list">
+        {entries.map((entry, index) => (
+          <div key={index} className="entry-card">
+          <p className="entry-content">{entry.content}</p>
+          <div className="entry-footer">
+            <small className="entry-time">{new Date(entry.time).toLocaleString()}</small>
+            <div className="twitter-btn-container">
+              <button
+                onClick={() => handleTweet(entry.content)}
+                className="twitter-btn"
+              >
+                <img
+                  src="/images/twitter-white.png"
+                  alt="Twitter"
+                  className="twitter-icon"
+                />
+                Share on Twitter
+              </button>
+            </div>
+          </div>
+        </div>        
+        ))}
     </div>
+  )}
+</div>
   );
 };
 

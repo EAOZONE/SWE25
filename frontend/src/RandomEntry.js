@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
+import './RandomEntry.css'
 
 function RandomEntry() {
   const navigate = useNavigate();
@@ -47,30 +48,52 @@ function RandomEntry() {
   }, []);
 
   return (
-      <div className="random-entry-container">
-        <h2>Random Gratitude Entry</h2>
-        {loading && <p>Loading...</p>}
-        {error && <p style={{color: 'red'}}>{error}</p>}
-
-        {!loading ? (
-            entry ? (
-                <div className="random-entry">
-                  <p>{entry.content}</p>
-                  <small>{new Date(entry.time).toLocaleString()}</small>
-                </div>
-            ) : (
-                <p>No entries found. Start writing gratitude entries!</p>
-            )) : null}
-        <button onClick={fetchRandomEntry}>Get Random Entry</button>
-        <button onClick={handleTweet}>
-            <img src="/images/twitter.png" alt="Twitter" style={{ width: '30px', marginRight: '5px' }} />
-          Share on Twitter
-        </button>
-        <button type="home-btn" onClick={() => navigate('/home')}>
+    <div className="entries-container">
+      <div className="center-title">
+        <h2 className="entries-title">
+          Random Gratitude Entry
+        </h2>
+      </div>
+  
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+  
+      {!loading && entry ? (
+        <div className="random-entry-card">
+          <p className="entry-content">{entry.content}</p>
+          <div className="entry-footer">
+            <small className="entry-time">{new Date(entry.time).toLocaleString()}</small>
+            <div className="twitter-btn-container">
+              <button 
+                className="twitter-btn" 
+                onClick={handleTweet}
+              >
+                <img 
+                  src="/images/twitter-white.png" 
+                  alt="Twitter"
+                  className="twitter-icon" 
+                />
+                Share on Twitter
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : !loading ? (
+        <p>No entries found. Start writing gratitude entries!</p>
+      ) : null}
+  
+      <div className="random-nav-buttons-wrapper">
+      <button onClick={fetchRandomEntry} className="btn-custom-random">
+        Random Entry
+      </button>
+        <button onClick={() => navigate('/home')} className="btn-custom-random">
           Home
         </button>
       </div>
+    </div>
   );
+  
 }
+
 
 export default RandomEntry;

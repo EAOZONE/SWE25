@@ -74,35 +74,34 @@ const handleDelete = () => {
     toggleProfile();
 }
 
-    return (
-        <header className="header">
-            <div className="container">
-                <h1 className="header-brand cabin-sketch-bold">
-                    jar of joy
-                </h1>
-                <div className="profile-container">
-                    <button className="profile-icon" onClick={toggleProfile}>
-                        👤 {/* Replace with an actual icon if needed */}
-                    </button>
-                    {showLogout && (
-                        <button className="logout-button" onClick={handleLogout}>
-                            Logout
-                        </button>
-                    )}
-                    {showNotifications && (
-                        <button className="notification-button" onClick={handleNotifications}>
-                            Notifications
-                        </button>
-                    )}
-                    {showDelete && (
-                        <button className="delete-button" onClick={handleDelete}>
-                            Delete Account
-                        </button>
-                    )}
-                </div>
-            </div>
-        </header>
-    );
+return (
+    <header className="header">
+        <h1 className="header-brand cabin-sketch-bold">
+            jar of joy
+        </h1>
+        <div className="profile-container">
+            <button className="profile-icon" onClick={toggleProfile}>
+                👤 {/* Replace with an actual icon if needed */}
+            </button>
+            {showLogout && (
+                <button className="logout-button" onClick={handleLogout}>
+                    Logout
+                </button>
+            )}
+            {showNotifications && (
+                <button className="notification-button" onClick={handleNotifications}>
+                    Notifications
+                </button>
+            )}
+            {showDelete && (
+                <button className="delete-button" onClick={handleDelete}>
+                    Delete Account
+                </button>
+            )}
+        </div>
+    </header>
+);
+
 }
 
 export default Header;

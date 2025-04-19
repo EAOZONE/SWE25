@@ -25,20 +25,21 @@ function Home() {
     return (
         <div className="home-container">
             <h1 className="home-title">Welcome!</h1>
-            <h2 className="streak-text">Daily Streak: {streak}</h2>
+            <h2 className="streak-text">Your Gratitude Streak: {streak}</h2>
             <div className="hearts-container">
             </div>
             <div className="jar-container">
+            <img src="/images/jar3.png" alt="Jar of Joy" className="jar-image" />
                 <button className="jar-button" onClick={() => navigate('/entries')}>
                     Add An Entry to Your Jar
                 </button>
-                <img src="/images/jar3.png" alt="Jar of Joy" className="jar-image" />
             </div>
+
             <div className="button-container">
-                <button className="btn-custom"onClick={() => navigate('/view_entries')}>
+                <button className="btn-custom btn-home"onClick={() => navigate('/view_entries')}>
                     View All Entries
                 </button>
-                <button className="btn-custom" onClick={() => navigate('/random_entry')}>
+                <button className="btn-custom btn-home" onClick={() => navigate('/random_entry')}>
                     Random Entry
                 </button>
             </div>

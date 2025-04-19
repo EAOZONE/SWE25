@@ -1,4 +1,3 @@
-
 import MyImage from "./—Pngtree—glass jar and love png_4425351 (1).png"
 
 import "./Homepage.css";
@@ -10,12 +9,11 @@ const Home = () => {
 
     return(
     <div className= "home-container">
-        <h1 className ="text"> Welcome to Jar of Joy!!!  </h1>
-        <h5 className ="summary"> 2025 SWE Project </h5>
+        <h1 className ="home-txt"> Jar of Joy  </h1>
         <img src={MyImage} alt="Jar of Joy" />
         <div className= "home-button-container">
-        <button className="btn-custom" onClick={() => navigate("/login")}>Login</button>
-        <button className="btn-custom" onClick={() => navigate("/register")}>Register</button>
+        <button className="btn-custom btn-large" onClick={() => navigate("/login")}>Login</button>
+        <button className="btn-custom btn-large" onClick={() => navigate("/register")}>Register</button>
         </div>
     </div>
     )

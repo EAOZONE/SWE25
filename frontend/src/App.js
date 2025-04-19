@@ -1,6 +1,7 @@
 // App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css'
 import TempLogin from './Login';
 import NewEntry from './NewEntry';
 import ViewEntries from './ViewEntries';
@@ -11,6 +12,7 @@ import Home from './Home';
 import Homepage from './Homepage'
 import '/'
 import Notifications from "./Notification";
+
 
 function App() {
   return (

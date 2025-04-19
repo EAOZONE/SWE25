@@ -36,7 +36,6 @@ function Login() {
   return (
     <div className="login-container">
       <h2>Login</h2>
-       <img src={MyImage} alt=""/>
       {message && <p>{message}</p>}
       <form onSubmit={handleLogin}>
         <input
@@ -53,12 +52,15 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Log In</button>
+        
+        <button className='btn-custom btn-small'>Log In</button>
       </form>
       <p>Don't have an account?</p>
-      <button onClick={() => navigate('/register')}>Register</button>
-      <button onClick={() => navigate('/')}>Home</button>
-    </div>
+      
+      <button className='btn-custom btn-small' onClick={() => navigate('/register')}>Register</button>
+      <button className='btn-custom btn-small' onClick={() => navigate('/')}>Home</button>
+      </div>
+    
   );
 };
 
