@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Login.css";
-import MyImage from "./efea45499e4aeaad2f9b0c13bff9f8ad.jpg"
-
-// console.log("Rendering Login page"); dubigging
 
 function Login() {
   const [email, setEmail] = useState('');

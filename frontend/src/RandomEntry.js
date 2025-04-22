@@ -95,5 +95,4 @@ function RandomEntry() {
   
 }
 
-
 export default RandomEntry;

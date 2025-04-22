@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./NewEntry.css";
-console.log("NewEntry component is rendering!");
-
-
 
 function NewEntry() {
   const navigate = useNavigate();

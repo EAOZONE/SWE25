@@ -1,7 +1,5 @@
 import MyImage from "./—Pngtree—glass jar and love png_4425351 (1).png"
-
 import "./Homepage.css";
-
 import {useNavigate} from "react-router-dom";
 
 const Home = () => {
