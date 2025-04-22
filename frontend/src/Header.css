@@ -21,7 +21,6 @@
     box-sizing: border-box;
 }
 
-
 .header-brand {
     font-size: 70px;
     color: #233c67;
@@ -61,7 +60,7 @@
 
 .logout-button {
     top: 179%;
-    background-color: #ff4d4d; /* Red for logout */
+    background-color: #ff4d4d;
 }
 
 .notification-button {

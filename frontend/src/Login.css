@@ -4,7 +4,6 @@
   max-width: 400px;
   margin: 150px auto;
   padding: 40px;
-  align: center;
   border-radius: 12px;
   text-align: center;
   font-family: "Playfair Display", serif;
@@ -28,12 +27,3 @@
   display: block;
   justify-content: center;
 }
-
-/*
-.login-container img {
-    padding: 12px;
-  width: 50%;
-  height: auto;
-  border-radius: 30px;
-  border: 7px;
-}*/

@@ -2,7 +2,6 @@ import React, {useState, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
-
 function Home() {
     const navigate = useNavigate();
     const [streak, setStreak] = useState(0);
